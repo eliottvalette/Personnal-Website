@@ -2,8 +2,8 @@ import React from 'react';
 
 const About = () => {
   const skills = [
-    'C', 'Firebase', 'MongoDB', 'MySQL', 'Pandas', 
-    'PyTorch', 'scikit-learn', 'Seaborn', 'TensorFlow'
+    'C', 'PyGame', 'Supabase', 'MySQL', 'Pandas', 
+    'PyTorch'
   ];
 
   return (
