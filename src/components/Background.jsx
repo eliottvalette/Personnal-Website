@@ -14,12 +14,28 @@ const Brain = () => {
     // Handle solid part (gradient side)
     solidScene.traverse((child) => {
       if (child.isMesh) {
-        solidMaterialRef.current = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color('#00ff88'),
-          metalness: 0.0,
-          roughness: 0.3,
-          transparent: true,
-          opacity: 1,
+        solidMaterialRef.current = new THREE.ShaderMaterial({
+          opacity: 0.5,
+          uniforms: {
+            time: { value: 0 },
+          },
+          vertexShader: `
+            varying vec3 vPosition;
+            void main() {
+              vPosition = position;
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+          `,
+          fragmentShader: `
+            varying vec3 vPosition;
+            void main() {
+              vec3 color1 = vec3(0.0, 1.0, 0.533); // #00ff88
+              vec3 color2 = vec3(0.0, 0.8, 1.0);   // #00ccff
+              float t = (vPosition.y + 1.0) * 0.5;  // Normalize y position to 0-1
+              vec3 finalColor = mix(color1, color2, t);
+              gl_FragColor = vec4(finalColor, 1.0);
+            }
+          `
         });
         child.material = solidMaterialRef.current;
       }
