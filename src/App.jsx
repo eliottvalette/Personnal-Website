@@ -5,6 +5,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Background from './components/Background';
+import Startup from './components/Startup';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <main>
         <About />
         <Projects />
+        <Startup />
         <Contact />
       </main>
       <footer className="footer">

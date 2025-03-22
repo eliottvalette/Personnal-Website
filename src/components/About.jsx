@@ -6,6 +6,24 @@ const About = () => {
     'PyTorch'
   ];
 
+  const rlProjects = [
+    {
+      title: 'Car-RL',
+      description: 'Un projet RL explorant l\'apprentissage autonome dans des environnements simulés.',
+      link: 'https://github.com/eliottvalette/Car-RL'
+    },
+    {
+      title: 'Fighting-Tanks-Reinforcement-Learning',
+      description: 'Un jeu multi-agent où des tanks intelligents apprennent à se battre sur un champ de bataille dynamique.',
+      link: 'https://github.com/eliottvalette/Fighting-Tanks-Reinforcement-Learning'
+    },
+    {
+      title: 'Snake-Game-Reinforcement-Learning',
+      description: 'Un snake entraîné avec RL pour naviguer et grandir dans le jeu classique.',
+      link: 'https://github.com/eliottvalette/Snake-Game-Reinforcement-Learning'
+    }
+  ];
+
   return (
     <section id="about" className="about">
       <div className="container">

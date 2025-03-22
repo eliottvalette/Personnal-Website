@@ -245,7 +245,7 @@ body {
 /* Contact section */
 .contact {
   padding: 6rem 0;
-  background: var(--section-bg);
+  background: transparent;
   position: relative;
 }
 
@@ -309,6 +309,80 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Startup section */
+.startup {
+  padding: 6rem 0;
+  background: var(--section-bg);
+  position: relative;
+}
+
+.startup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.startup-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--light-text);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.applications-section {
+  margin-top: 2rem;
+}
+
+.applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.application-card {
+  background: var(--card-bg);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.application-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+}
+
+.application-card h4 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.vision-section {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vision-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.vision-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--light-text);
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .about-content,
@@ -326,6 +400,14 @@ body {
 
   .nav-links {
     gap: 1rem;
+  }
+
+  .applications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .startup-description {
+    font-size: 1rem;
   }
 }
 

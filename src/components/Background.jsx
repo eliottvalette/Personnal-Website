@@ -1,152 +1,122 @@
-import React, { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Sphere, Cylinder, OrbitControls } from '@react-three/drei';
+import React, { useRef, Suspense, useEffect, useState } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { OrbitControls, useGLTF, Environment, Line, Grid } from '@react-three/drei';
 import * as THREE from 'three';
 
-const Nucleobase = ({ position, rotation }) => {
-  return (
-    <group position={position} rotation={rotation}>
-      <Sphere args={[0.15, 8, 8]}>
-        <meshStandardMaterial 
-          color="#ffffff" 
-          emissive="#ffffff" 
-          emissiveIntensity={0.2}
-          wireframe={true}
-        />
-      </Sphere>
-    </group>
-  );
-};
-
-const DNAHelix = () => {
+const Brain = () => {
+  const { scene: solidScene } = useGLTF('/brain-solid.glb');
+  const { scene: wireScene } = useGLTF('/brain-wireframe.glb');
   const groupRef = useRef();
-  const baseCount = 20;
-  const radius = 1;
-  const height = 5;
-  const twist = 2 * Math.PI;
+  const solidMaterialRef = useRef();
+  const wireMaterialRef = useRef();
 
-  const bases = useMemo(() => {
-    const positions = [];
-    for (let i = 0; i < baseCount; i++) {
-      const t = i / (baseCount - 1);
-      const angle = t * twist;
-      const y = (t - 0.5) * height;
-      
-      // First strand
-      positions.push({
-        position: [
-          Math.cos(angle) * radius,
-          y,
-          Math.sin(angle) * radius,
-        ],
-        rotation: [0, angle, 0],
-      });
-      
-      // Second strand (opposite)
-      positions.push({
-        position: [
-          Math.cos(angle + Math.PI) * radius,
-          y,
-          Math.sin(angle + Math.PI) * radius,
-        ],
-        rotation: [0, angle + Math.PI, 0],
-      });
-    }
-    return positions;
-  }, []);
+  useEffect(() => {
+    // Handle solid part (gradient side)
+    solidScene.traverse((child) => {
+      if (child.isMesh) {
+        solidMaterialRef.current = new THREE.MeshPhysicalMaterial({
+          color: new THREE.Color('#00ff88'),
+          metalness: 0.0,
+          roughness: 0.3,
+          transparent: true,
+          opacity: 1,
+        });
+        child.material = solidMaterialRef.current;
+      }
+    });
+
+    // Handle wireframe part
+    wireScene.traverse((child) => {
+      if (child.isMesh) {
+        wireMaterialRef.current = new THREE.MeshBasicMaterial({
+          color: new THREE.Color('#ffffff'),
+          wireframe: true,
+          transparent: true,
+          opacity: 0.5,
+        });
+        child.material = wireMaterialRef.current;
+      }
+    });
+  }, [solidScene, wireScene]);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    groupRef.current.rotation.y = time * 0.2;
-    groupRef.current.position.y = Math.sin(time * 0.5) * 0.1;
+    groupRef.current.position.y = Math.sin(time * 0.3) * 0.05;
   });
 
   return (
-    <group ref={groupRef}>
-      {/* DNA strands */}
-      
-      {/* Nucleobases */}
-      {bases.map((base, i) => (
-        <Nucleobase key={i} {...base} />
-      ))}
-      
-      {/* Connecting lines */}
-      {bases.map((base, i) => {
-        if (i % 2 === 0 && i < bases.length - 2) {
-          const nextBase = bases[i + 2];
-          return (
-            <line key={`line-${i}`}>
-              <bufferGeometry>
-                <bufferAttribute
-                  attach="attributes.position"
-                  count={2}
-                  array={new Float32Array([
-                    ...base.position,
-                    ...nextBase.position,
-                  ])}
-                  itemSize={3}
-                />
-              </bufferGeometry>
-              <lineBasicMaterial color="#ffffff" transparent opacity={0.2} />
-            </line>
-          );
-        }
-        return null;
-      })}
+    <group ref={groupRef} scale={2} position={[0, 0, 0]}>
+      <primitive object={solidScene} />
+      <primitive object={wireScene} />
     </group>
   );
 };
 
-const Background = () => {
+const CameraRig = ({ rotation }) => {
+  const { camera } = useThree();
+  const [radius] = useState(6);
+  const [height] = useState(1);
+  const cameraRef = useRef({ x: 0, y: 0, z: 0, currentRotation: 0 });
+  const maxRotationSpeed = 3; // Increased from 2 to 3 for smoother transitions
+
+  useFrame((state, delta) => {
+    const targetRotation = rotation;
+    let currentRotation = cameraRef.current.currentRotation;
+    
+    // Calculate the distance to the target rotation
+    let distanceToTarget = targetRotation - currentRotation;
+    
+    // Normalize the distance to be between -PI and PI
+    while (distanceToTarget > Math.PI) distanceToTarget -= 2 * Math.PI;
+    while (distanceToTarget < -Math.PI) distanceToTarget += 2 * Math.PI;
+    
+    // Limit the rotation speed based on delta time
+    const maxDelta = maxRotationSpeed * delta;
+    const limitedDiff = Math.sign(distanceToTarget) * Math.min(Math.abs(distanceToTarget), maxDelta);
+    
+    // Update current rotation
+    currentRotation += limitedDiff;
+    cameraRef.current.currentRotation = currentRotation;
+
+    // Calculate orbital position using the current rotation
+    const targetX = Math.cos(currentRotation) * radius;
+    const targetZ = Math.sin(currentRotation) * radius;
+    const targetY = height;
+
+    // Smooth camera movement with easing
+    const easing = 0.05;
+    cameraRef.current.x += (targetX - cameraRef.current.x) * easing;
+    cameraRef.current.y += (targetY - cameraRef.current.y) * easing;
+    cameraRef.current.z += (targetZ - cameraRef.current.z) * easing;
+
+    // Apply camera position
+    camera.position.x = cameraRef.current.x;
+    camera.position.y = cameraRef.current.y;
+    camera.position.z = cameraRef.current.z;
+
+    // Always look at the center (0, 0, 0)
+    camera.lookAt(0, 0, 0);
+  });
+
+  return null;
+};
+
+const Background = ({ rotation = 0, currentView = 'landing' }) => {
   const groupRef = useRef();
-  
-  const helices = useMemo(() => {
-    const count = 3;
-    const positions = [];
-    
-    for (let i = 0; i < count; i++) {
-      positions.push({
-        position: [
-          (Math.random() - 0.5) * 10,
-          (Math.random() - 0.5) * 10,
-          (Math.random() - 0.5) * 10,
-        ],
-        rotation: [Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI],
-        scale: 0.7 + Math.random() * 0.5,
-      });
-    }
-    
-    return positions;
-  }, []);
 
   return (
     <>
-      <OrbitControls 
-        enableZoom={true}
-        enablePan={true}
-        enableRotate={true}
-        minDistance={5}
-        maxDistance={20}
-        cameraPosition={[10, 10, 10]}
-        showXrButton={false}
-        showGrid={false}
-        showAxes={false}
-        target={[0, 0, 0]}
-        makeDefault
-      />
+      <CameraRig rotation={rotation} currentView={currentView} />
       <group ref={groupRef}>
-        {/* Ambient light */}
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={0.3} />
+        <directionalLight position={[5, 5, 5]} intensity={1} color="#32CD32" />
+        <directionalLight position={[-5, -5, -5]} intensity={0.3} color="#32CD32" />
         
-        {/* Point light */}
-        <pointLight position={[10, 10, 10]} intensity={1} color="#ffffff" />
-        
-        {/* DNA helices */}
-        {helices.map((helix, i) => (
-          <group key={i} position={helix.position} rotation={helix.rotation} scale={helix.scale}>
-            <DNAHelix />
-          </group>
-        ))}
+        <Suspense fallback={null}>
+          <Brain />
+        </Suspense>
+                
+        <Environment preset="night" />
       </group>
     </>
   );

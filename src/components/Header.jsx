@@ -4,12 +4,9 @@ const Header = () => {
   return (
     <header className="header">
       <div className="hero">
-        <h1>Hi, I'm Eliott Valette</h1>
-        <p>Deep Learning Student & Full Stack Developer</p>
-        <div className="hero-cta">
-          <a href="#projects" className="btn primary">View My Work</a>
-          <a href="#contact" className="btn secondary">Get in Touch</a>
-        </div>
+        <h1>Eliott Valette</h1>
+        <h2>Étudiant HEC Paris/ENSAE | Spécialiste en Deep Learning</h2>
+        <p className="scroll-text">Faites défiler pour explorer mon parcours en machine learning et santé.</p>
       </div>
     </header>
   );
