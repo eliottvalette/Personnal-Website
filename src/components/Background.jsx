@@ -15,27 +15,48 @@ const Brain = () => {
     solidScene.traverse((child) => {
       if (child.isMesh) {
         solidMaterialRef.current = new THREE.ShaderMaterial({
-          opacity: 0.5,
           uniforms: {
             time: { value: 0 },
+            lightPosition: { value: new THREE.Vector3(5, 5, 5) }
           },
           vertexShader: `
             varying vec3 vPosition;
+            varying vec3 vNormal;
+            
             void main() {
               vPosition = position;
+              vNormal = normalize(normalMatrix * normal);
               gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
           `,
           fragmentShader: `
             varying vec3 vPosition;
+            varying vec3 vNormal;
+            uniform vec3 lightPosition;
+            
             void main() {
               vec3 color1 = vec3(0.0, 1.0, 0.533); // #00ff88
               vec3 color2 = vec3(0.0, 0.8, 1.0);   // #00ccff
-              float t = (vPosition.y + 1.0) * 0.5;  // Normalize y position to 0-1
-              vec3 finalColor = mix(color1, color2, t);
+              
+              // Base gradient based on position
+              float t = (vPosition.y + 1.0) * 0.5;
+              vec3 baseColor = mix(color1, color2, t);
+              
+              // Lighting calculation
+              vec3 lightDir = normalize(lightPosition);
+              float diffuse = max(dot(vNormal, lightDir), 0.0);
+              
+              // Add ambient light to avoid completely dark areas
+              float ambient = 0.3;
+              float lighting = ambient + diffuse * 0.7;
+              
+              // Apply lighting to the base color
+              vec3 finalColor = baseColor * lighting;
+              
               gl_FragColor = vec4(finalColor, 1.0);
             }
-          `
+          `,
+          side: THREE.DoubleSide // Pour rendre les deux côtés du mesh
         });
         child.material = solidMaterialRef.current;
       }
