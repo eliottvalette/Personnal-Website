@@ -1,8 +1,46 @@
-import { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useRef, useState, useEffect, Suspense } from 'react';
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import UI from './UI';
+
+// Background component using the bg.webp image
+const Background = () => {
+  const texture = useLoader(THREE.TextureLoader, '/bg.webp');
+  
+  // Apply some optimizations to the texture
+  useEffect(() => {
+    if (texture) {
+      texture.minFilter = THREE.LinearFilter;
+      texture.generateMipmaps = false;
+      texture.needsUpdate = true;
+    }
+    return () => {
+      // Clean up texture when component unmounts
+      if (texture) texture.dispose();
+    };
+  }, [texture]);
+
+  // Calculate proper sizing to cover the viewport
+  const { viewport } = useThree();
+  const { width, height } = viewport;
+  const aspectRatio = width / height;
+  
+  return (
+    <mesh position={[-0.4, 1, -4]}>
+      <planeGeometry args={[aspectRatio * 15, 15]} />
+      <meshBasicMaterial map={texture} side={THREE.FrontSide} transparent={true} />
+    </mesh>
+  );
+};
+
+// Fallback component to show while texture is loading
+const BackgroundFallback = () => (
+  <mesh position={[0, 0, -5]}>
+    <planeGeometry args={[15, 15]} />
+    <meshBasicMaterial color="#111111" />
+  </mesh>
+);
 
 // Mouse tracking for camera movement
 const CameraController = () => {
@@ -59,12 +97,24 @@ const Scene = () => {
         overflow: 'hidden'
       }}
       shadows
-      gl={{ antialias: true, alpha: false }}
-      dpr={[1, 2]} // Responsive pixel ratio
+      gl={{ 
+        antialias: true, 
+        alpha: true,
+        powerPreference: 'high-performance', 
+        preserveDrawingBuffer: true,
+        failIfMajorPerformanceCaveat: true
+      }}
+      dpr={window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio} // Limit DPR for performance
     >
-      <color attach="background" args={['#000000']} />
+      {/* Removing the solid color background */}
+      {/* <color attach="background" args={['#000000']} /> */}
       <PerspectiveCamera makeDefault position={[0, 1, 2]} fov={75} near={0.1} far={1000} />
       <CameraController />
+      
+      <Suspense fallback={<BackgroundFallback />}>
+        <Background />
+      </Suspense>
+      
       <UI />
       
       {/* Simple ambient light for UI visibility */}

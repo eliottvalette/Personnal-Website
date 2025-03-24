@@ -75,7 +75,7 @@ const LeftPanel = ({ activeSection, setActiveSection }: { activeSection: string,
   ];
 
   return (
-    <Html position={[-2.6, 1, -1.5]} transform occlude distanceFactor={1.5}>
+    <Html position={[-2.2, 1, -1]} rotation={[0, Math.PI * 0.15, 0]} transform occlude distanceFactor={1.5}>
       <div className="container-panel left-panel">
         <div className="panel-content">
           <nav className="sidebar">
@@ -111,6 +111,28 @@ const HomePanel = () => {
           <p>Faites défiler pour explorer mon parcours en machine learning et santé.</p>
         </div>
       </div>
+      
+      <div className="home-highlights">
+        <h3>Highlights</h3>
+        <div className="highlight-grid">
+          <div className="highlight-card">
+            <h4>Machine Learning</h4>
+            <p>Spécialiste en apprentissage profond avec une expertise dans les réseaux de neurones et l'intelligence artificielle appliquée à la santé.</p>
+          </div>
+          <div className="highlight-card">
+            <h4>Healthcare Tech</h4>
+            <p>Développement d'applications innovantes pour le secteur de la santé, notamment dans le domaine du diagnostic assisté par IA.</p>
+          </div>
+          <div className="highlight-card">
+            <h4>Research</h4>
+            <p>Participation à des hackathons et projets de recherche dans le domaine de l'imagerie médicale et l'analyse de données de santé.</p>
+          </div>
+          <div className="highlight-card">
+            <h4>Entrepreneurship</h4>
+            <p>Fondateur de Half-Life, une startup visant à transformer la santé grâce à l'intelligence artificielle et le machine learning.</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -124,6 +146,8 @@ const AboutPanel = () => {
         <div className="about-text">
           <p>I am a student at HEC Paris/ENSAE specializing in Deep Learning. My passion lies in developing innovative solutions using cutting-edge technologies and machine learning algorithms.</p>
           <p>With a strong foundation in both theoretical and practical aspects of computer science, I focus on creating efficient and scalable applications that solve real-world problems.</p>
+          <p>Mon parcours académique m'a permis de développer une expertise unique à l'intersection de la data science, de l'économie et du management, que j'applique particulièrement au domaine de la santé.</p>
+          <p>Je suis passionné par les technologies qui peuvent avoir un impact positif sur la société, notamment dans le domaine médical où l'intelligence artificielle peut révolutionner les méthodes de diagnostic et de traitement.</p>
         </div>
         <div className="skills">
           <h3>Skills</h3>
@@ -131,6 +155,29 @@ const AboutPanel = () => {
             {skillsList.map((skill, index) => (
               <div key={index} className="skill-item">{skill}</div>
             ))}
+            <div className="skill-item">Deep Learning</div>
+            <div className="skill-item">Python</div>
+            <div className="skill-item">TensorFlow</div>
+            <div className="skill-item">Computer Vision</div>
+            <div className="skill-item">NLP</div>
+            <div className="skill-item">Data Visualization</div>
+            <div className="skill-item">React</div>
+            <div className="skill-item">JavaScript</div>
+            <div className="skill-item">TypeScript</div>
+          </div>
+          
+          <div className="education">
+            <h3>Education</h3>
+            <div className="education-item">
+              <h4>HEC Paris</h4>
+              <p>Master in Management - Grande École</p>
+              <p className="date">2022 - Present</p>
+            </div>
+            <div className="education-item">
+              <h4>ENSAE Paris</h4>
+              <p>Engineering Degree - Data Science & Machine Learning</p>
+              <p className="date">2022 - Present</p>
+            </div>
           </div>
         </div>
       </div>
@@ -244,7 +291,7 @@ const ContactPanel = () => {
 // Center container with content panels
 const CenterPanel = ({ activeSection }: { activeSection: string }) => {
   return (
-    <Html position={[0, 1, -2.5]} transform occlude distanceFactor={1.5}>
+    <Html position={[0, 1, -2.3]} transform occlude distanceFactor={1.5}>
       <div className="container-panel center-panel">
         <div className="panel-content">
           {activeSection === 'home' && <HomePanel />}
@@ -259,18 +306,51 @@ const CenterPanel = ({ activeSection }: { activeSection: string }) => {
 };
 
 // Right container with notes
-const RightPanel = () => {
+const RightPanel = ({ activeSection }: { activeSection: string }) => {
+  const getNoteContent = () => {
+    switch (activeSection) {
+      case 'home':
+        return {
+          title: "Welcome",
+          text: "My portfolio showcases my journey in machine learning and healthcare technologies."
+        };
+      case 'about':
+        return {
+          title: "Profile",
+          text: "Dual expertise in management (HEC) and technical AI (ENSAE) with focus on healthcare applications."
+        };
+      case 'projects':
+        return {
+          title: "Research",
+          text: "Exploring cutting-edge machine learning solutions for healthcare challenges through hackathons and collaborations."
+        };
+      case 'startup':
+        return {
+          title: "Half-Life",
+          text: "Building AI-powered diagnostic tools to transform healthcare through innovative technology solutions."
+        };
+      case 'contact':
+        return {
+          title: "Connect",
+          text: "Interested in collaboration opportunities? I'm always open to discussing new projects in AI and healthcare."
+        };
+      default:
+        return {
+          title: "Notes",
+          text: "Navigate through the sections to learn more about my work and vision."
+        };
+    }
+  };
+
+  const noteContent = getNoteContent();
+
   return (
-    <Html position={[2.9, 1.5, -1]} transform occlude distanceFactor={1.5}>
+    <Html position={[2.9, 1.5, -1]} rotation={[0, Math.PI * -0.15, 0]} transform occlude distanceFactor={1.5}>
       <div className="container-panel right-panel">
         <div className="panel-content">
           <div className="notes-panel">
-            <h2>Notes</h2>
-            <div className="note">
-              <h3>Bienvenue sur mon portfolio</h3>
-              <p>Découvrez mon parcours à l'intersection du machine learning et de la santé.</p>
-              <p>Ce site présente mes projets de recherche et ma vision pour l'avenir de la santé numérique.</p>
-            </div>
+            <h2>{noteContent.title}</h2>
+            <p className="note-text">{noteContent.text}</p>
           </div>
         </div>
       </div>
@@ -285,7 +365,7 @@ const UI = () => {
     <>
       <LeftPanel activeSection={activeSection} setActiveSection={setActiveSection} />
       <CenterPanel activeSection={activeSection} />
-      <RightPanel />
+      <RightPanel activeSection={activeSection} />
     </>
   );
 };
