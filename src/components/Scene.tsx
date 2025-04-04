@@ -4,9 +4,9 @@ import { PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import UI from './UI';
 
-// Background component using the bg.webp image
+// Background component using the living_room.jpeg image
 const Background = () => {
-  const texture = useLoader(THREE.TextureLoader, '/bg.webp');
+  const texture = useLoader(THREE.TextureLoader, '/living_room.jpeg');
   
   // Apply some optimizations to the texture
   useEffect(() => {
@@ -27,7 +27,7 @@ const Background = () => {
   const aspectRatio = width / height;
   
   return (
-    <mesh position={[-0.4, 1, -4]}>
+    <mesh position={[-0.4, 1, -6]}>
       <planeGeometry args={[aspectRatio * 15, 15]} />
       <meshBasicMaterial map={texture} side={THREE.FrontSide} transparent={true} />
     </mesh>

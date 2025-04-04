@@ -64,8 +64,8 @@ const applications: ApplicationCard[] = [
   }
 ];
 
-// Left container with navigation
-const LeftPanel = ({ activeSection, setActiveSection }: { activeSection: string, setActiveSection: (section: string) => void }) => {
+// Navigation Sidebar
+const SidebarNavigation = ({ activeSection, setActiveSection }: { activeSection: string, setActiveSection: (section: string) => void }) => {
   const sections = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Me' },
@@ -75,25 +75,23 @@ const LeftPanel = ({ activeSection, setActiveSection }: { activeSection: string,
   ];
 
   return (
-    <Html position={[-2.2, 1, -1]} rotation={[0, Math.PI * 0.15, 0]} transform occlude distanceFactor={1.5}>
-      <div className="container-panel left-panel">
-        <div className="panel-content">
-          <nav className="sidebar">
-            <ul>
-              {sections.map(section => (
-                <li 
-                  key={section.id}
-                  className={activeSection === section.id ? 'active' : ''}
-                  onClick={() => setActiveSection(section.id)}
-                >
-                  {section.label}
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+    <div className="sidebar-container">
+      <h2 className="sidebar-title">Bibliothèque</h2>
+      <p className="sidebar-subtitle">Portfolio</p>
+      <div className="sidebar">
+        <ul>
+          {sections.map(section => (
+            <li 
+              key={section.id}
+              className={activeSection === section.id ? 'active' : ''}
+              onClick={() => setActiveSection(section.id)}
+            >
+              {section.label}
+            </li>
+          ))}
+        </ul>
       </div>
-    </Html>
+    </div>
   );
 };
 
@@ -288,85 +286,48 @@ const ContactPanel = () => {
   );
 };
 
-// Center container with content panels
-const CenterPanel = ({ activeSection }: { activeSection: string }) => {
+// Main Content Panel
+const ContentPanel = ({ activeSection }: { activeSection: string }) => {
   return (
-    <Html position={[0, 1, -2.3]} transform occlude distanceFactor={1.5}>
-      <div className="container-panel center-panel">
-        <div className="panel-content">
-          {activeSection === 'home' && <HomePanel />}
-          {activeSection === 'about' && <AboutPanel />}
-          {activeSection === 'projects' && <ProjectsPanel />}
-          {activeSection === 'startup' && <StartupPanel />}
-          {activeSection === 'contact' && <ContactPanel />}
+    <div className="content-container">
+      <div className="content-header">
+        <h2 className="content-title">Projets</h2>
+        <p className="content-subtitle">Portfolio et expériences</p>
+        <div className="search-container">
+          <input type="text" className="search-input" placeholder="Rechercher dans la collection" />
         </div>
       </div>
-    </Html>
+      <div className="content-panel">
+        {activeSection === 'home' && <HomePanel />}
+        {activeSection === 'about' && <AboutPanel />}
+        {activeSection === 'projects' && <ProjectsPanel />}
+        {activeSection === 'startup' && <StartupPanel />}
+        {activeSection === 'contact' && <ContactPanel />}
+      </div>
+      <div className="player-controls">
+        <button className="control-button previous">◀◀</button>
+        <button className="control-button play-pause">▶</button>
+        <button className="control-button next">▶▶</button>
+        <div className="now-playing">
+          <span className="track-name">Portfolio</span>
+          <span className="artist-name">Eliott Valette</span>
+        </div>
+      </div>
+    </div>
   );
 };
 
-// Right container with notes
-const RightPanel = ({ activeSection }: { activeSection: string }) => {
-  const getNoteContent = () => {
-    switch (activeSection) {
-      case 'home':
-        return {
-          title: "Welcome",
-          text: "My portfolio showcases my journey in machine learning and healthcare technologies."
-        };
-      case 'about':
-        return {
-          title: "Profile",
-          text: "Dual expertise in management (HEC) and technical AI (ENSAE) with focus on healthcare applications."
-        };
-      case 'projects':
-        return {
-          title: "Research",
-          text: "Exploring cutting-edge machine learning solutions for healthcare challenges through hackathons and collaborations."
-        };
-      case 'startup':
-        return {
-          title: "Half-Life",
-          text: "Building AI-powered diagnostic tools to transform healthcare through innovative technology solutions."
-        };
-      case 'contact':
-        return {
-          title: "Connect",
-          text: "Interested in collaboration opportunities? I'm always open to discussing new projects in AI and healthcare."
-        };
-      default:
-        return {
-          title: "Notes",
-          text: "Navigate through the sections to learn more about my work and vision."
-        };
-    }
-  };
-
-  const noteContent = getNoteContent();
-
-  return (
-    <Html position={[2.9, 1.5, -1]} rotation={[0, Math.PI * -0.15, 0]} transform occlude distanceFactor={1.5}>
-      <div className="container-panel right-panel">
-        <div className="panel-content">
-          <div className="notes-panel">
-            <h2>{noteContent.title}</h2>
-            <p className="note-text">{noteContent.text}</p>
-          </div>
-        </div>
-      </div>
-    </Html>
-  );
-};
-
+// Main UI component
 const UI = () => {
   const [activeSection, setActiveSection] = useState('home');
 
   return (
-    <>
-      <LeftPanel activeSection={activeSection} setActiveSection={setActiveSection} />
-      <CenterPanel activeSection={activeSection} />
-      <RightPanel activeSection={activeSection} />
-    </>
+    <Html position={[0, 1, -2.3]} transform occlude distanceFactor={1.5}>
+      <div className="ui-container">
+        <SidebarNavigation activeSection={activeSection} setActiveSection={setActiveSection} />
+        <ContentPanel activeSection={activeSection} />
+      </div>
+    </Html>
   );
 };
 
