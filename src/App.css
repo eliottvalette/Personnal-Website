@@ -5,6 +5,9 @@
   padding: 0;
   text-align: center;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo {
@@ -14,10 +17,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em rgba(0, 122, 255, 0.5));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em rgba(0, 122, 255, 0.5));
 }
 
 @keyframes logo-spin {
@@ -37,6 +40,17 @@
 
 .card {
   padding: 2em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(20px) saturate(180%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
 }
 
 .read-the-docs {
@@ -50,6 +64,9 @@
   overflow: hidden;
   position: relative;
   background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Loading state */
@@ -64,6 +81,8 @@
   justify-content: center;
   color: white;
   font-size: 1.5rem;
-  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'SF Pro Display', Roboto, sans-serif;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
 }
