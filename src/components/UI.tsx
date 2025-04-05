@@ -65,6 +65,80 @@ const applications: ApplicationCard[] = [
 ];
 
 // Navigation Sidebar
+const SidebarIcons = ({ activeSection, setActiveSection }: { activeSection: string, setActiveSection: (section: string) => void }) => {
+  // Icons
+  const sections = [
+    { 
+      id: 'home', 
+      label: 'Home',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M9 22V12H15V22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    },
+    { 
+      id: 'about', 
+      label: 'About',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    },
+    { 
+      id: 'projects', 
+      label: 'Projects',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 19C22 19.5304 21.7893 20.0391 21.4142 20.4142C21.0391 20.7893 20.5304 21 20 21H4C3.46957 21 2.96086 20.7893 2.58579 20.4142C2.21071 20.0391 2 19.5304 2 19V5C2 4.46957 2.21071 3.96086 2.58579 3.58579C2.96086 3.21071 3.46957 3 4 3H9L11 6H20C20.5304 6 21.0391 6.21071 21.4142 6.58579C21.7893 6.96086 22 7.46957 22 8V19Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    },
+    { 
+      id: 'startup', 
+      label: 'Half-Life',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 22V12M3 12V8.5C3 7.70435 3.31607 6.94129 3.87868 6.37868C4.44129 5.81607 5.20435 5.5 6 5.5C6.79565 5.5 7.55871 5.81607 8.12132 6.37868C8.68393 6.94129 9 7.70435 9 8.5V12M3 12H9M21 22V16M21 16V4.5C21 3.70435 20.6839 2.94129 20.1213 2.37868C19.5587 1.81607 18.7956 1.5 18 1.5C17.2044 1.5 16.4413 1.81607 15.8787 2.37868C15.3161 2.94129 15 3.70435 15 4.5V16M21 16H15M9 22V18.5C9 17.7044 9.31607 16.9413 9.87868 16.3787C10.4413 15.8161 11.2044 15.5 12 15.5C12.7956 15.5 13.5587 15.8161 14.1213 16.3787C14.6839 16.9413 15 17.7044 15 18.5V22M9 22H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    },
+    { 
+      id: 'contact', 
+      label: 'Contact',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M22 6L12 13L2 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    }
+  ];
+
+  return (
+    <div className="sidebaricons-container">
+      <ul>
+        {sections.map(section => (
+          <li 
+            key={section.id}
+            className={activeSection === section.id ? 'active' : ''}
+            onClick={() => setActiveSection(section.id)}
+          >
+            <div className="icon-wrapper">
+              {section.icon}
+            </div>
+            <span className="icon-label">{section.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+// Navigation Sidebar
 const SidebarNavigation = ({ activeSection, setActiveSection }: { activeSection: string, setActiveSection: (section: string) => void }) => {
   const sections = [
     { id: 'home', label: 'Home' },
@@ -322,12 +396,17 @@ const UI = () => {
   const [activeSection, setActiveSection] = useState('home');
 
   return (
-    <Html position={[0, 1, -2.3]} transform occlude distanceFactor={1.5}>
-      <div className="ui-container">
-        <SidebarNavigation activeSection={activeSection} setActiveSection={setActiveSection} />
-        <ContentPanel activeSection={activeSection} />
-      </div>
-    </Html>
+    <>
+      <Html position={[-4.8, 1, -2.3]} transform occlude distanceFactor={1.5}>
+        <SidebarIcons activeSection={activeSection} setActiveSection={setActiveSection} />
+      </Html>
+      <Html position={[0, 1, -2.3]} transform occlude distanceFactor={1.5}>
+        <div className="ui-container">
+          <SidebarNavigation activeSection={activeSection} setActiveSection={setActiveSection} />
+          <ContentPanel activeSection={activeSection} />
+        </div>
+      </Html>
+    </>
   );
 };
 
