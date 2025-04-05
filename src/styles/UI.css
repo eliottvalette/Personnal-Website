@@ -36,6 +36,19 @@
   --spacing-lg: 2.4vh;
   --spacing-xl: 3vh;
   --icon-size: 2.4vh;
+  
+  /* Blur amounts */
+  --blur-sm: 1vh;
+  --blur-md: 2vh;
+  --blur-lg: 4vh;
+  
+  /* Shadow values */
+  --shadow-light: 0 0.8vh 3.2vh var(--shadow-color);
+  --shadow-medium: 0 0.6vh 3vh var(--shadow-color);
+  --shadow-strong: 0 0.8vh 3.2vh rgba(185, 185, 185, 0.2);
+  --text-shadow-sm: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.2);
+  --text-shadow-md: 0 0.1vh 0.3vh rgba(0, 0, 0, 0.2);
+  --text-shadow-lg: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
 }
 
 /* Main UI Container - Updated */
@@ -44,10 +57,10 @@
   width: 180vh;
   height: 90vh;
   background: var(--background-blur);
-  backdrop-filter: blur(4vh) saturate(180%);
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
   border-radius: var(--border-radius-lg);
   border: var(--border-width) solid var(--border-color);
-  box-shadow: 0 0.8vh 3.2vh var(--shadow-color);
+  box-shadow: var(--shadow-light);
   overflow: hidden;
 }
 
@@ -56,7 +69,7 @@
   width: 6vh;
   height: 40vh;
   background: var(--background-blur);
-  backdrop-filter: blur(2vh) saturate(180%);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
   border-right: var(--border-width) solid var(--border-color);
   border-radius: 3vh;
   display: flex;
@@ -165,7 +178,7 @@
 .sidebar {
   width: 100%;
   background: var(--background-blur);
-  backdrop-filter: blur(2vh);
+  backdrop-filter: blur(var(--blur-md));
   border-radius: var(--border-radius-md);
   padding: 1.2vh;
 }
@@ -185,7 +198,7 @@
   transition: all 0.3s ease;
   font-size: 1.6vh;
   font-weight: 500;
-  text-shadow: 0 0.1vh 0.3vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-md);
   border-left: 0.2vh solid transparent;
 }
 
@@ -263,7 +276,7 @@
   margin-top: 1.5vh;
   background: var(--control-bg);
   border-radius: var(--border-radius-lg);
-  backdrop-filter: blur(1vh);
+  backdrop-filter: blur(var(--blur-sm));
   border: var(--border-width) solid var(--border-color);
 }
 
@@ -324,7 +337,7 @@
   flex-direction: column;
   justify-content: space-between;
   box-shadow: none;
-  backdrop-filter: blur(2vh) saturate(180%);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
   transition: all 0.3s ease;
   cursor: pointer;
   background: var(--card-bg);
@@ -335,14 +348,14 @@
 
 .project-card:hover {
   transform: translateY(-0.4vh);
-  box-shadow: 0 0.6vh 3vh var(--shadow-color);
+  box-shadow: var(--shadow-light);
 }
 
 .project-card h3 {
   font-size: 1.8vh;
   margin-bottom: 1.6vh;
   font-weight: 600;
-  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-lg);
   color: var(--primary-color);
 }
 
@@ -368,7 +381,7 @@
   font-size: 2.2vh;
   margin-bottom: 1.5vh;
   color: var(--primary-color);
-  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-lg);
   position: relative;
 }
 
@@ -502,7 +515,7 @@
   display: flex;
   flex-direction: column;
   background: var(--card-bg);
-  backdrop-filter: blur(4vh) saturate(180%);
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
   padding: 2.4vh;
   border-radius: var(--border-radius-lg);
   width: 100%;
@@ -518,7 +531,7 @@
   font-weight: 600;
   margin-bottom: 0.8vh;
   color: var(--primary-color);
-  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-lg);
 }
 
 .profile-info h2 {
@@ -526,14 +539,14 @@
   font-weight: 500;
   margin-bottom: 0.8vh;
   color: var(--text-secondary);
-  text-shadow: 0 0.1vh 0.3vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-md);
 }
 
 .profile-info p {
   font-size: 1.4vh;
   margin-bottom: 1.6vh;
   color: var(--text-secondary);
-  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-sm);
 }
 
 /* Home highlights */
@@ -550,7 +563,7 @@
   font-size: 1.8vh;
   margin-bottom: 1.6vh;
   color: var(--primary-color);
-  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-lg);
 }
 
 .highlight-grid {
@@ -570,14 +583,14 @@
 
 .highlight-card:hover {
   transform: translateY(-0.4vh);
-  box-shadow: 0 0.8vh 3.2vh rgba(185, 185, 185, 0.2);
+  box-shadow: var(--shadow-strong);
 }
 
 .highlight-card h4 {
   font-size: 1.6vh;
   margin-bottom: 0.8vh;
   color: var(--primary-color);
-  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.2);
+  text-shadow: var(--text-shadow-sm);
 }
 
 .highlight-card p {

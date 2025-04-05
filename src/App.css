@@ -10,17 +10,27 @@
   align-items: center;
 }
 
+:root {
+  --accent-blue: rgba(0, 122, 255, 0.5);
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(255, 255, 255, 0.2);
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --docs-color: #888;
+  --loading-bg: rgba(0, 0, 0, 0.8);
+  --blur-xl: 2vh;
+}
+
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 6vh;
+  padding: 1.5vh;
   will-change: filter;
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em rgba(0, 122, 255, 0.5));
+  filter: drop-shadow(0 0 2vh var(--accent-blue));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em rgba(0, 122, 255, 0.5));
+  filter: drop-shadow(0 0 2vh var(--accent-blue));
 }
 
 @keyframes logo-spin {
@@ -39,22 +49,22 @@
 }
 
 .card {
-  padding: 2em;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  backdrop-filter: blur(20px) saturate(180%);
+  padding: 2vh;
+  background: var(--card-bg);
+  border: 0.1vh solid var(--card-border);
+  border-radius: 1.6vh;
+  backdrop-filter: blur(var(--blur-xl)) saturate(180%);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0.4vh 2vh var(--card-shadow);
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-0.4vh);
+  box-shadow: 0 0.6vh 3vh var(--card-shadow);
 }
 
 .read-the-docs {
-  color: #888;
+  color: var(--docs-color);
 }
 
 /* Main App Container */
@@ -80,9 +90,9 @@
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.5vh;
   font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'SF Pro Display', Roboto, sans-serif;
-  background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(20px);
+  background-color: var(--loading-bg);
+  backdrop-filter: blur(var(--blur-xl));
   z-index: 1000;
 }

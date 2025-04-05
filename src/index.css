@@ -17,6 +17,28 @@
   --text-secondary: #cccccc;
   --border-color: rgba(255, 255, 255, 0.2);
   --shadow-color: rgba(0, 0, 0, 0.4);
+  
+  /* Button variables */
+  --button-bg: rgba(255, 255, 255, 0.08);
+  --button-hover-bg: rgba(255, 255, 255, 0.15);
+  --button-border-radius: 1.2vh;
+  --button-padding-v: 0.6vh;
+  --button-padding-h: 1.2vh;
+  
+  /* Link variables */
+  --link-shadow: rgba(0, 122, 255, 0.5);
+  
+  /* Border variables */
+  --glass-border-radius: 2.4vh;
+  
+  /* Text variables */
+  --text-default: rgba(255, 255, 255, 0.87);
+  
+  /* Additional variables for light scheme */
+  --light-text: #213547;
+  --light-bg: #ffffff;
+  --light-button-bg: #f9f9f9;
+  --light-link-hover: #747bff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -47,7 +69,7 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 3.2vh;
   line-height: 1.1;
   font-weight: 600;
   color: var(--primary-color);
@@ -66,27 +88,27 @@ p {
 }
 
 button {
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  border-radius: var(--button-border-radius);
+  border: 0.1vh solid var(--border-color);
+  padding: var(--button-padding-v) var(--button-padding-h);
+  font-size: 1vh;
   font-weight: 500;
   font-family: inherit;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--button-bg);
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(1vh);
 }
 
 button:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--button-hover-bg);
   border-color: var(--accent-color);
 }
 
 button:focus,
 button:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 0.2vh solid var(--accent-color);
 }
 
 a {
@@ -97,7 +119,7 @@ a {
 
 a:hover {
   color: var(--primary-color);
-  text-shadow: 0 0 8px rgba(0, 122, 255, 0.5);
+  text-shadow: 0 0 0.8vh var(--link-shadow);
 }
 
 /* Animations */
@@ -112,21 +134,21 @@ button:active, a:active {
 /* Glass effect */
 .glass {
   background: var(--background-blur);
-  backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px var(--shadow-color);
+  backdrop-filter: blur(4vh) saturate(180%);
+  border: 0.1vh solid var(--border-color);
+  border-radius: var(--glass-border-radius);
+  box-shadow: 0 0.8vh 3.2vh var(--shadow-color);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--light-text);
+    background-color: var(--light-bg);
   }
   a:hover {
-    color: #747bff;
+    color: var(--light-link-hover);
   }
   button {
-    background-color: #f9f9f9;
+    background-color: var(--light-button-bg);
   }
 }
