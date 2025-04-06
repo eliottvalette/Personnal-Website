@@ -1,3 +1,4 @@
+/* Cursor Effect specific styles */
 :root {
   --cursor-border-color: rgba(255, 255, 255, 0.8);
   --cursor-shadow: rgba(255, 255, 255, 0.2);

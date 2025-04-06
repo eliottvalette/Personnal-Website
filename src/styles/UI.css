@@ -10,8 +10,7 @@
   --primary-color: #ffffff;
   --secondary-color: #f0f0f0;
   --accent-color: #b9b9b9;
-  --background-blur: rgba(120, 120, 120, 0.7);
-  --background-dark: rgba(120, 120, 120, 0.7);
+  --background-blur: rgba(120, 120, 120, 0.95);
   --text-color: #ffffff;
   --text-secondary: #cccccc;
   --border-color: rgba(255, 255, 255, 0.2);
@@ -51,13 +50,15 @@
   --text-shadow-lg: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
 }
 
-/* Main UI Container - Updated */
+/* UI Component specific styles */
+
+/* Main UI Container */
 .ui-container {
   display: flex;
   width: 180vh;
   height: 90vh;
   background: var(--background-blur);
-  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+  backdrop-filter: blur(20px);
   border-radius: var(--border-radius-lg);
   border: var(--border-width) solid var(--border-color);
   box-shadow: var(--shadow-light);
@@ -69,7 +70,7 @@
   width: 6vh;
   height: 40vh;
   background: var(--background-blur);
-  backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  backdrop-filter: blur(20px);
   border-right: var(--border-width) solid var(--border-color);
   border-radius: 3vh;
   display: flex;

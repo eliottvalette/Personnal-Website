@@ -1,13 +1,17 @@
+/* Global Variables and Base Styles */
 :root {
+  /* Typography */
   font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'SF Pro Display', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
+  /* Base Theme */
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #000;
 
+  /* Color Variables */
   --primary-color: #ffffff;
   --secondary-color: #f0f0f0;
   --accent-color: #b9b9b9;
@@ -17,41 +21,58 @@
   --text-secondary: #cccccc;
   --border-color: rgba(255, 255, 255, 0.2);
   --shadow-color: rgba(0, 0, 0, 0.4);
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --hover-bg: rgba(255, 255, 255, 0.15);
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --control-bg: rgba(255, 255, 255, 0.1);
+
+  /* Size Variables */
+  --border-width: 0.1vh;
+  --border-radius-sm: 0.8vh;
+  --border-radius-md: 1.2vh;
+  --border-radius-lg: 2.4vh;
+  --border-radius-xl: 3vh;
+  --spacing-xs: 0.5vh;
+  --spacing-sm: 0.8vh;
+  --spacing-md: 1.2vh;
+  --spacing-lg: 2.4vh;
+  --spacing-xl: 3vh;
   
-  /* Button variables */
-  --button-bg: rgba(255, 255, 255, 0.08);
-  --button-hover-bg: rgba(255, 255, 255, 0.15);
-  --button-border-radius: 1.2vh;
-  --button-padding-v: 0.6vh;
-  --button-padding-h: 1.2vh;
+  /* Blur Amounts */
+  --blur-sm: 1vh;
+  --blur-md: 2vh;
+  --blur-lg: 4vh;
+  --blur-xl: 2vh;
   
-  /* Link variables */
-  --link-shadow: rgba(0, 122, 255, 0.5);
+  /* Shadow Values */
+  --shadow-light: 0 0.8vh 3.2vh var(--shadow-color);
+  --shadow-medium: 0 0.6vh 3vh var(--shadow-color);
+  --shadow-strong: 0 0.8vh 3.2vh rgba(185, 185, 185, 0.2);
+  --text-shadow-sm: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.2);
+  --text-shadow-md: 0 0.1vh 0.3vh rgba(0, 0, 0, 0.2);
+  --text-shadow-lg: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
   
-  /* Border variables */
-  --glass-border-radius: 2.4vh;
-  
-  /* Text variables */
-  --text-default: rgba(255, 255, 255, 0.87);
-  
-  /* Additional variables for light scheme */
+  /* Light Theme Variables */
   --light-text: #213547;
   --light-bg: #ffffff;
   --light-button-bg: #f9f9f9;
   --light-link-hover: #747bff;
 
+  /* Font Rendering */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Base Elements */
 body {
   margin: 0;
   padding: 0;
@@ -68,6 +89,7 @@ body {
   overflow: hidden;
 }
 
+/* Typography */
 h1 {
   font-size: 3.2vh;
   line-height: 1.1;
@@ -87,22 +109,22 @@ p {
   line-height: 1.6;
 }
 
+/* Buttons */
 button {
-  border-radius: var(--button-border-radius);
-  border: 0.1vh solid var(--border-color);
-  padding: var(--button-padding-v) var(--button-padding-h);
+  border-radius: var(--border-radius-md);
+  border: var(--border-width) solid var(--border-color);
+  padding: var(--spacing-xs) var(--spacing-md);
   font-size: 1vh;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--button-bg);
+  background-color: var(--input-bg);
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(1vh);
 }
 
 button:hover {
-  background-color: var(--button-hover-bg);
+  background-color: var(--hover-bg);
   border-color: var(--accent-color);
 }
 
@@ -111,6 +133,7 @@ button:focus-visible {
   outline: 0.2vh solid var(--accent-color);
 }
 
+/* Links */
 a {
   color: var(--accent-color);
   text-decoration: none;
@@ -119,7 +142,6 @@ a {
 
 a:hover {
   color: var(--primary-color);
-  text-shadow: 0 0 0.8vh var(--link-shadow);
 }
 
 /* Animations */
@@ -131,15 +153,7 @@ button:active, a:active {
   transform: scale(0.98);
 }
 
-/* Glass effect */
-.glass {
-  background: var(--background-blur);
-  backdrop-filter: blur(4vh) saturate(180%);
-  border: 0.1vh solid var(--border-color);
-  border-radius: var(--glass-border-radius);
-  box-shadow: 0 0.8vh 3.2vh var(--shadow-color);
-}
-
+/* Light Theme */
 @media (prefers-color-scheme: light) {
   :root {
     color: var(--light-text);
